@@ -1,39 +1,38 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MyApp extends StatefulWidget {
+  MyApp({Key? key}) : super(key: key);
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  var name=['치킨집', '중국집', '피자집'];
+  var like=[0,0,0];
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: Text('앱제목'),),
-        body: ListView(
-          children: [
-            Row(
-             children:[
-               Icon(Icons.account_circle, size: 50,),
-               Text('홍길동')
-             ], 
+        body: ListView.builder(
+              itemCount: 3,
+              itemBuilder: (c, i){
+                return ListTile(
+                  leading: Text(like[i].toString()),
+                  title: Text(name[i]),
+                  trailing: ElevatedButton(child: Text('좋아요'), onPressed: (){
+                    setState((){
+                      like[i]++;
+                    });
+                  },)
+                );
+              }
             ),
-            Row(
-              children:[
-                Icon(Icons.account_circle, size: 50,),
-                Text('홍길동')
-              ],
-            ),
-            Row(
-              children:[
-                Icon(Icons.account_circle, size: 50,),
-                Text('홍길동')
-              ],
-            )
-          ],
-        ),
         bottomNavigationBar: MyBottomAppBar(),
         )
     );
